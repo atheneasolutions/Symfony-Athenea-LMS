@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Meva Salut DEV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .apps{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #004a99;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.5rem;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 70px); /* Adjust height considering the header */
+            border: none;
+        }
+        .app-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+        .app-item {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 15px;
+            width: 200px;
+            text-decoration: none;
+            color: #333;
+            transition: box-shadow 0.3s;
+        }
+        .app-item:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .app-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+        .app-name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        label {
+            margin-bottom: 5px;
+        }
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <header>La Meva Salut DEV</header>
+    <h2>Usuari autenticat LMS</h2>
+    <form method="POST" action="{{ path('athenea_lms_enter') }}">
+        <label for="CIP">CIP:</label>
+        <input type="text" id="CIP" name="CIP" value="{{ userData.CIP ?? '' }}" required>
+
+        <label for="CODI_USER_CONNECTAT">CODI_USER_CONNECTAT:</label>
+        <input type="text" id="CODI_USER_CONNECTAT" name="CODI_USER_CONNECTAT" value="{{ userData.CODI_USER_CONNECTAT ?? '' }}" required>
+
+        <label for="NOM_USER_CONNECTAT">NOM_USER_CONNECTAT:</label>
+        <input type="text" id="NOM_USER_CONNECTAT" name="NOM_USER_CONNECTAT" value="{{ userData.NOM_USER_CONNECTAT ?? '' }}" required>
+
+        <label for="DNI">DNI:</label>
+        <input type="text" id="DNI" name="DNI" value="{{ userData.DNI ?? '' }}">
+
+        <label for="IDIOMA">IDIOMA:</label>
+        <select id="IDIOMA" name="IDIOMA" required>
+            <option value="ca" {% if userData.IDIOMA == 'ca' %}selected{% endif %}>Català</option>
+            <option value="es" {% if userData.IDIOMA == 'es' %}selected{% endif %}>Castellà</option>
+            <option value="oc" {% if userData.IDIOMA == 'oc' %}selected{% endif %}>Occità</option>
+        </select>
+
+        <label for="DN">DN:</label>
+        <input type="text" id="DN" name="DN" value="{{ userData.DN ?? '' }}">
+
+
+        <label for="DADES_AUXILIARS">DADES_AUXILIARS:</label>
+        <input type="text" id="DADES_AUXILIARS" name="DADES_AUXILIARS" value="{{ userData.DADES_AUXILIARS ?? '' }}">
+
+        <button type="submit" class="app-item">
+            <img src="{{ logo }}" alt="logo" class="app-logo">
+            <span class="app-name">Entrar a: {{ name }}</span>
+        </button>
+    </ul>
+    </form>
+</body>
+</html>

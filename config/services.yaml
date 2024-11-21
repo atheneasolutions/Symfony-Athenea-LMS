@@ -1,0 +1,24 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Athenea\LMS\Service\UserService:
+        arguments:
+            $documentManager: '@doctrine_mongodb.odm.default_document_manager'
+
+    Athenea\LMS\Service\LmsAuthService:
+        arguments:
+                $lmsPublicKey: "%athenea.lms.lms_public_key%"
+                $appPrivateKey: "%athenea.lms.app_private_key%"
+                $appPublicKey: "%athenea.lms.app_public_key%"
+                $devPrivateKeyPath: "%athenea.lms.dev_private_key_path%"
+                $devPublicKeyPath: "%athenea.lms.dev_public_key_path%"
+
+    athenea.lms.auth_service:
+        alias: Athenea\LMS\Service\LmsAuthService
+        public: true
+
+    Athenea\LMS\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
