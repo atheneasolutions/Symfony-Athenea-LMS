@@ -17,6 +17,7 @@ class LmsAuthService {
         private string $appPublicKey,
         private string $devPrivateKeyPath,
         private string $devPublicKeyPath,
+        private bool $verifyLmsSignature,
         private DocumentManager $dm,
     ){
 
@@ -45,6 +46,7 @@ class LmsAuthService {
 
     public function verifyLmsSignature(string $signature, ?string $cip = null, ?string $dni = null, bool $devEnv = false){
         // Load your RSA public key (PEM format)
+        if(!$this->verifyLmsSignature) return;
         $publicKeyPem = $devEnv ? file_get_contents($this->devPublicKeyPath) : $this->lmsPublicKey;
         $this->verifySignature($publicKeyPem, $signature, $cip, $dni);
     }

@@ -35,6 +35,7 @@ class AtheneaLaMevaSalutExtension extends Extension implements PrependExtensionI
        $container->setParameter('athenea.lms.lms_public_key', $config['lms_public_key']);
        $container->setParameter('athenea.lms.app_public_key', $config['app_public_key']);
        $container->setParameter('athenea.lms.app_private_key', $config['app_private_key']);
+       $container->setParameter('athenea.lms.verify_lms_signature', $config['verify_lms_signature']);
         // $definition = $container->getDefinition("athenea.monolog.activation_strategy.param_based_activation");
         // $definition->replaceArgument('$enabled', $config['send_log_mails']);
     }
