@@ -20,6 +20,8 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('lms_public_key')->defaultValue('lms_public_key')->end()
                 ->scalarNode('app_public_key')->defaultValue('app_public_key')->end()
                 ->scalarNode('app_private_key')->defaultValue('app_private_key')->end()
+                ->scalarNode('app_private_key')->defaultValue('app_private_key')->end()
+                ->booleanNode('verify_lms_signature')->defaultTrue()->end()
             ->end()
         ;
 
