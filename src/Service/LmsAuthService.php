@@ -41,12 +41,12 @@ class LmsAuthService {
             $this->logger?->error('Failed to load private key', ['key_type' => $keyIdentifier]);
             throw new Exception('Failed to load private key');
         }
-        $hash = hash('sha256', $payload, true);
-        openssl_sign($hash, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+        openssl_sign($payload, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+
 
         $this->logger?->debug('Signature created successfully', [
             'key_type' => $keyIdentifier,
-            'signature' => $signature
+            'signature' => base64_encode($signature)
         ]);
 
         return base64_encode($signature);
@@ -95,7 +95,7 @@ class LmsAuthService {
         $signature = base64_decode($signature);
         $hash = hash('sha256', $payload, true);
 
-        $verified = openssl_verify($hash, $signature, $publicKey, OPENSSL_ALGO_SHA256);
+        $verified = openssl_verify($payload, $signature, $publicKey, OPENSSL_ALGO_SHA256);
 
         $this->logger?->debug('Signature verification attempt', [
             'payload' => $payload,
