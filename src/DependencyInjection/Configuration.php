@@ -15,6 +15,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('app_url')->defaultValue('https://default-url.com')->end()
+                ->scalarNode('form_url')->defaultValue("")->end()
                 ->scalarNode('app_logo')->defaultValue('/images/default-logo.png')->end()
                 ->scalarNode('app_name')->defaultValue('My App Name')->end()
                 ->scalarNode('lms_public_key')->defaultValue('lms_public_key')->end()

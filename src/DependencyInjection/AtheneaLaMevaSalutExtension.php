@@ -22,6 +22,7 @@ class AtheneaLaMevaSalutExtension extends Extension implements PrependExtensionI
         $container->setParameter('athenea_lms.app_url', $config['app_url']);
         $container->setParameter('athenea_lms.app_logo', $config['app_logo']);
         $container->setParameter('athenea_lms.app_name', $config['app_name']);
+        $container->setParameter('athenea.lms.form_url', $config['form_url']);
 
         
        // Resolve paths relative to the bundle
