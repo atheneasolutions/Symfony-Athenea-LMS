@@ -43,8 +43,11 @@ class LmsController extends AbstractController{
         
         $appFirma = $lmsAuthService->createSignature($cip, $dni);
 
-        $url = $this->generateUrl(route: "athenea_lms_form_lms", referenceType: UrlGeneratorInterface::ABSOLUTE_URL);
-        $url = str_replace('http://', 'https://', $url);
+        $url = $this->getParameter('athenea_lms.form_url');
+        if(!$url){
+            $url = $this->generateUrl(route: "athenea_lms_form_lms", referenceType: UrlGeneratorInterface::ABSOLUTE_URL);
+            $url = str_replace('http://', 'https://', $url);
+        }
         return $this->render('@AtheneaLaMevaSalut/auto_form.html.twig', [
             'url' => $url,
             'CIP' => $cip,
