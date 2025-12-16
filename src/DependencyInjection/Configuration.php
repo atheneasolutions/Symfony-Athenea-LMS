@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('form_url')->defaultValue("")->end()
                 ->scalarNode('app_logo')->defaultValue('/images/default-logo.png')->end()
                 ->scalarNode('app_name')->defaultValue('My App Name')->end()
-                ->scalarNode('lms_public_key')->defaultValue('lms_public_key')->end()
+                ->scalarNode('lms_public_key')->defaultValue(null)->end()
                 ->arrayNode('lms_public_keys')->scalarPrototype()->end()->defaultValue([])->end()
                 ->scalarNode('app_public_key')->defaultValue('app_public_key')->end()
                 ->scalarNode('app_private_key')->defaultValue('app_private_key')->end()
