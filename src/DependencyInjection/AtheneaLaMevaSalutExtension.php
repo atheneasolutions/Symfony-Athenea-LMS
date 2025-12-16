@@ -33,7 +33,13 @@ class AtheneaLaMevaSalutExtension extends Extension implements PrependExtensionI
        // Define parameters for keys
        $container->setParameter('athenea.lms.dev_private_key_path', $devPrivateKeyPath);
        $container->setParameter('athenea.lms.dev_public_key_path', $devPublicKeyPath);
-       $container->setParameter('athenea.lms.lms_public_key', $config['lms_public_key']);
+       $lmsKeys = $config['lms_public_keys'] ?? [];
+
+        if (!empty($config['lms_public_key'])) {
+            array_unshift($lmsKeys, $config['lms_public_key']);
+        }
+
+       $container->setParameter('athenea.lms.lms_public_keys', $lmsKeys);
        $container->setParameter('athenea.lms.app_public_key', $config['app_public_key']);
        $container->setParameter('athenea.lms.app_private_key', $config['app_private_key']);
        $container->setParameter('athenea.lms.verify_lms_signature', $config['verify_lms_signature']);
