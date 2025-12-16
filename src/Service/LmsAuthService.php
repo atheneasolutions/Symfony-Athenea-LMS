@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
 class LmsAuthService {
 
     public function __construct(
-        private string $lmsPublicKey,
+        private array $lmsPublicKeys,
         private string $appPrivateKey,
         private string $appPublicKey,
         private string $devPrivateKeyPath,
@@ -58,15 +58,33 @@ class LmsAuthService {
             return;
         }
 
-        $publicKeyPem = $devEnv ? file_get_contents($this->devPublicKeyPath) : $this->lmsPublicKey;
+        $publicKeysPem = $devEnv ? [file_get_contents($this->devPublicKeyPath)] : $this->lmsPublicKeys;
         $keyIdentifier = $devEnv ? 'dev_public_key' : 'lms_public_key';
 
-        $this->logger?->debug('Verifying LMS signature', [
-            'key_type' => $keyIdentifier,
-            'public_key' => $publicKeyPem,
-            'signature' => $signature
-        ]);
-        $this->verifySignature($publicKeyPem, $signature, $cip, $dni);
+        foreach ($publicKeysPem as $index => $publicKeyPem) {
+             $this->logger?->debug('Verifying LMS signature', [
+                'key_type' => $keyIdentifier,
+                'key_index' => $index,
+                'public_key' => $publicKeyPem,
+                'signature' => $signature
+            ]);
+
+            try {
+                $this->verifySignature($publicKeyPem, $signature, $cip, $dni);
+
+                $this->logger?->debug('LMS signature verified successfully', [
+                    'key_index' => $index
+                ]);
+
+                return;
+            } catch (InvalidSignature) {
+                $this->logger?->debug('LMS signature invalid for key', [
+                    'key_index' => $index
+                ]);
+            }
+        }
+        $this->logger?->error('LMS signature invalid for all configured keys');
+        throw new InvalidSignature('Signatura LMS no vàlida');
     }
 
     public function verifyAppSignature(string $signature, ?string $cip = null, ?string $dni = null){

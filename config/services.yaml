@@ -9,7 +9,7 @@ services:
 
     Athenea\LMS\Service\LmsAuthService:
         arguments:
-                $lmsPublicKey: "%athenea.lms.lms_public_key%"
+                $lmsPublicKeys: "%athenea.lms.lms_public_keys%"
                 $appPrivateKey: "%athenea.lms.app_private_key%"
                 $appPublicKey: "%athenea.lms.app_public_key%"
                 $devPrivateKeyPath: "%athenea.lms.dev_private_key_path%"
